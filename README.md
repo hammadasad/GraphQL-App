@@ -1,23 +1,49 @@
-# Adonis API application
+Purpose:
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+To learn about the world of GraphQL and Adonis, a rail-like framework for Node
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+Technologie Used:
 
-## Setup
+-> Adonis (Another Node framework, but like RAILS!!)
+  -> Adonis uses async and waits, no callback hells
+  -> Looks good for CRUD
+  -> Lucid ORM which reminds me of ActiveRecord
+-> ApolloServer -> The GraphQL server to work with Node frameworks
+-> GraphQL itself
+-> PostgreSQL
 
-Use the adonis command to install the blueprint
+# To Test
 
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
-
+-> Utilize Insomnia
+-> Launch Adonis App "adonis serve --dev"
+-> Create Request on Insomnia (POST with Body Type as GraphQL Query)
+-> Create User (mutation)
+  -> "mutation {
+      createUser(username: "hammy", email: "hammy@example.com", password: "password") {
+          id
+          username
+          email
+      }
+    }"
+-> Authenticate (mutation login)
+  -> "mutation {
+          login(email: "hammy@example.com", password: "password")
+      }"
+-> Check response, take JWT token, Add JWT to Bearer Token Auth in Insomnia
+-> Create Post (mutation addPost)
+  -> "mutation {
+            addPost(title: "Hello Everyone", content: "First Blog Post") {
+                id
+                title
+                slug
+                content
+                user {
+                    username
+                    email
+                }
+            }
+        }"
+->
 
 ### Migrations
 
