@@ -19,7 +19,7 @@ const resolvers = {
       return users.toJSON()
     },
     // Get a user by its id
-    async fetchUser(_, { id }) {
+    async user(_, { id }) {
       const user = await User.find(id)
       return user.toJSON()
     },
@@ -29,7 +29,7 @@ const resolvers = {
       return posts.toJSON()
     },
     // Retrieve a post by its id
-    async fetchPost(_, { id }) {
+    async post(_, { id }) {
       const post = await Post.find(id)
       return post.toJSON()
     }

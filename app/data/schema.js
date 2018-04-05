@@ -1,10 +1,14 @@
 'use strict'
 
-// Retrieve graphql util
 const { makeExecutableSchema } = require('graphql-tools')
+const resolvers = require('./resolvers')
 
-// Define our schema using the GraphQL schema lang
-// Fields with ! mean NOT NULL
+// Define our schema using the GraphQL schema language
+
+// Define our mutations to the data on the server
+// signIn -> returns a JWT (String), allows user to login
+// addPost -> Authenticated user to create a post
+
 const typeDefs = `
   type User {
     id: Int!
@@ -19,25 +23,17 @@ const typeDefs = `
     content: String!
     user: User!
   }
+  type Query {
+    allUsers: [User]
+    user(id: Int!): User
+    allPosts: [Post]
+    post(slug: String!): Post
+  }
+  type Mutation {
+    login (email: String!, password: String!): String
+    createUser (username: String!, email: String!, password: String!): User
+    addPost (title: String!, content: String!): Post
+  }
 `
-// The query we want to define on the schema above
-// Fetch user based on user id or posts belonging to a user id
-type Query {
-  allUsers: [User]
-  fetchUser(id: Int!): User
-  allPosts: [Post]
-  fetchPost(id: Int!): Post
-}
 
-// Define our mutations to the data on the server
-// signIn -> returns a JWT (String), allows user to login
-// addPost -> Authenticated user to create a post
-type Mutation {
-  signIn (email: String!, password: String!): String
-  createUser (username: String!, email: String!, password: String!): User
-  addPost (title: String!, content: String!): Post
-}
-
-// Build the schema
-const resolvers = require('./resolvers')
-module.exports = makeExecutableSchema({ typeDefs, resolvers})
+module.exports = makeExecutableSchema({ typeDefs, resolvers })
